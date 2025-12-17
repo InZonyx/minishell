@@ -1,6 +1,7 @@
 NAME			= minishell
 CC				= cc
 CFLAGS			= -Wall -Wextra -Werror
+ADFLAGS			= -Wall -Wextra -Werror -lreadline
 AR				= ar
 ARFLAGS			= -rcs
 RM				= rm -f
@@ -23,7 +24,7 @@ $(LIBFT_A):
 	@make -C $(LIBFT)
 
 $(NAME) : $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_A) -o $(NAME)
+	$(CC) $(CFLAGS) $(ADFLAGS) $(OBJS) $(LIBFT_A) -o $(NAME)
 
 %.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@

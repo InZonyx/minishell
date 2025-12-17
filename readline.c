@@ -6,7 +6,7 @@
 /*   By: amoureau <amoureau@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 09:06:33 by amoureau          #+#    #+#             */
-/*   Updated: 2025/12/17 09:10:03 by amoureau         ###   ########.fr       */
+/*   Updated: 2025/12/17 10:06:22 by amoureau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void read_line(void)
 
 void print_line(char *line)
 {
-	printf("%s", line);
+	printf("%s\n", line);
 	free(line);
 	read_line();
 }
