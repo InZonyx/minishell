@@ -11,7 +11,9 @@ LIBFT_A = ./libft/libft.a
 
 ########  SRCS  §  BSRCS ########
 SRCS			=	main.c \
-					readline.c \
+					src/parsing/main_loop.c \
+					src/parsing/help.c \
+					src/parsing/token.c \
 
 ##BSRCS			=	
 

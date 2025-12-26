@@ -6,17 +6,36 @@
 /*   By: amoureau <amoureau@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/26 18:22:12 by elhirond          #+#    #+#             */
-/*   Updated: 2025/12/26 19:41:49 by amoureau         ###   ########.fr       */
+/*   Updated: 2025/12/26 22:02:56 by amoureau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static void	handle_eof(t_shell *sh)
+int shell_init(t_shell *sh)
 {
-	printf("exit\n");
-	shell_destroyer(sh);
-	exit(sh->last_status);
+	sh->last_status = 0;
+	return (0);
+}
+
+void	handle_eof(t_shell *sh)
+{
+ 	printf("exit\n");
+ 	shell_destroyer(sh);
+ 	exit(sh->last_status);
+}
+
+void process_line(t_shell *sh, const char *line)
+{
+	int	i;
+
+	i = 0;
+	tokenise(sh, line);
+	while (sh->token[i])
+	{
+		printf("token %i is: %s\n", (i + 1), sh->token[i]);
+		i++;
+	}
 }
 
 void	main_loop(t_shell *sh)
@@ -35,7 +54,8 @@ void	main_loop(t_shell *sh)
 			continue ;
 		}
 		add_history(line);
-		// process_line(sh, line);
+		process_line(sh, line);
 		free(line);
 	}
+	(void)sh;
 }

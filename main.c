@@ -6,7 +6,7 @@
 /*   By: amoureau <amoureau@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 08:47:43 by amoureau          #+#    #+#             */
-/*   Updated: 2025/12/26 19:35:42 by amoureau         ###   ########.fr       */
+/*   Updated: 2025/12/26 21:27:58 by amoureau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,15 @@ getenv, tcsetattr, tcgetattr, tgetent, tgetflag,
 tgetnum, tgetstr, tgoto, tputs
 */
 
-int main(void)
+int main(int ac, char **av, char **envp)
 {
 	t_shell sh;
-	
-	// if (shell_init(&sh) != 0)
-		// return (1);
+
+	if (ac != 1 && shell_init(&sh) != 0)
+		return (1);
+	(void)av;
+	sh.envp = envp;
 	main_loop(&sh);
-	// shell_destrory(&sh);
+	shell_destroyer(&sh);
 	return (sh.last_status);
 }

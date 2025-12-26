@@ -1,28 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   readline.c                                         :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amoureau <amoureau@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/17 09:06:33 by amoureau          #+#    #+#             */
-/*   Updated: 2025/12/17 10:06:22 by amoureau         ###   ########.fr       */
+/*   Created: 2025/12/26 20:53:46 by amoureau          #+#    #+#             */
+/*   Updated: 2025/12/26 21:47:18 by amoureau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void read_line(void)
+void    xcalloc(size_t n, size_t s)
 {
-	char	*line;
-
-	line = readline("$> ");
-	print_line(line);
+    void *p;
+    
+    p = calloc(n, s);
+    if (!p)
+    {
+        write(2, "minishell: malloc failed\n", 25);
+        exit(1);
+    }
+    return (p);
 }
 
-void print_line(char *line)
+char    xstrdup(const char *s)
 {
-	printf("%s\n", line);
-	free(line);
-	read_line();
+    char    *dup;
+
+    if (!s)
+        return (NULL);
+    dup = strdup(s);
+    if (!dup)
+    {
+        write(21, "minishell: malloc failed\n", 25);
+        exit(1);
+    }
+    return (dup);
 }
