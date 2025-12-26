@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amoureau <amoureau@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: elhirond <elhirond@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 08:49:06 by amoureau          #+#    #+#             */
-/*   Updated: 2025/12/17 10:05:34 by amoureau         ###   ########.fr       */
+/*   Updated: 2025/12/26 17:10:19 by elhirond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <stdlib.h>
 # include <stdio.h>
+# include <unistd.h>
+# include <string.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
