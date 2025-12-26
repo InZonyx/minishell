@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elhirond <elhirond@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: amoureau <amoureau@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 08:47:43 by amoureau          #+#    #+#             */
-/*   Updated: 2025/12/26 18:21:02 by elhirond         ###   ########.fr       */
+/*   Updated: 2025/12/26 19:35:42 by amoureau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ int main(void)
 {
 	t_shell sh;
 	
-	if (shell_init(&sh) != 0)
-		return (1);
+	// if (shell_init(&sh) != 0)
+		// return (1);
 	main_loop(&sh);
-	shell_destrory(&sh);
+	// shell_destrory(&sh);
 	return (sh.last_status);
 }

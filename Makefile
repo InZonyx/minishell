@@ -24,7 +24,7 @@ $(LIBFT_A):
 	@make -C $(LIBFT)
 
 $(NAME) : $(OBJS)
-	$(CC) $(CFLAGS) $(ADFLAGS) $(OBJS) $(LIBFT_A) -o $(NAME)
+	$(CC) $(ADFLAGS) $(OBJS) $(LIBFT_A) -o $(NAME)
 
 %.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@

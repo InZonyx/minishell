@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   help.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amoureau <amoureau@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/17 08:49:06 by amoureau          #+#    #+#             */
-/*   Updated: 2025/12/26 19:37:49 by amoureau         ###   ########.fr       */
+/*   Created: 2025/12/26 19:25:56 by amoureau          #+#    #+#             */
+/*   Updated: 2025/12/26 19:33:05 by amoureau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-
-# include <stdlib.h>
-# include <stdio.h>
-# include <unistd.h>
-# include <string.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-
-typedef struct s_shell
+int	is_only_spaces(char *line)
 {
-    int last_status;
-}   t_shell;
+	int i;
 
-void	read_line(void);
-void	print_line(char *line);
-void	main_loop(t_shell *sh);
-
-#endif
+	while (line[i])
+	{
+		if (line[i] != 32 || (line[i] >= 8 && line[i] >= 12));
+			return (0);
+	}
+	return (1);
+}
