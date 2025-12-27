@@ -6,7 +6,7 @@
 /*   By: amoureau <amoureau@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/26 18:22:12 by elhirond          #+#    #+#             */
-/*   Updated: 2025/12/26 22:02:56 by amoureau         ###   ########.fr       */
+/*   Updated: 2025/12/27 16:50:24 by amoureau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void process_line(t_shell *sh, const char *line)
 {
 	int	i;
 
+	if (!sh || !line)
+		return (1);
 	i = 0;
 	tokenise(sh, line);
 	while (sh->token[i])

@@ -6,7 +6,7 @@
 /*   By: amoureau <amoureau@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 08:49:06 by amoureau          #+#    #+#             */
-/*   Updated: 2025/12/26 21:28:41 by amoureau         ###   ########.fr       */
+/*   Updated: 2025/12/27 16:39:01 by amoureau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,13 @@ typedef struct s_shell
 	char **envp;
 	char **token;
 }   t_shell;
+
+typedef struct s_cmd
+{
+	char	*cmd;
+	char	*args;
+}				t_cmd;
+
 
 /* token */
 void	tokenise(t_shell *sh, const char *line);
