@@ -6,7 +6,7 @@
 
 ## Other
 .DS_STORE
-
+.oldfiles
 *test*
 
 ## Template from https://github.com/github/gitignore

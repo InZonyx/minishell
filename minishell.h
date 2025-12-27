@@ -6,7 +6,7 @@
 /*   By: amoureau <amoureau@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 08:49:06 by amoureau          #+#    #+#             */
-/*   Updated: 2025/12/27 16:39:01 by amoureau         ###   ########.fr       */
+/*   Updated: 2025/12/27 23:08:46 by amoureau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,69 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-typedef struct s_shell
+//  Token types 
+enum e_token_type
 {
-	int last_status;
-	char **envp;
-	char **token;
-}   t_shell;
+	TOK_WORD,
+	TOK_PIPE,
+	TOK_REDIR_IN,
+	TOK_REDIR_OUT,
+	TOK_APPEND,
+	TOK_HEREDOC
+};
+
+typedef struct s_token
+{
+	enum e_token_type	type;
+	char				*value;
+	struct s_token		*next;
+}	t_token;
+
+typedef struct s_redir
+{
+	enum e_token_type	type;
+	char				*target;
+	struct s_redir		*next;
+}	t_redir;
 
 typedef struct s_cmd
 {
-	char	*cmd;
-	char	*args;
-}				t_cmd;
+	char			**argv;
+	t_redir			*redirs;
+	struct s_cmd	*next;
+}	t_cmd;
 
+// Env
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
+
+typedef struct s_shell
+{
+	int		last_status;
+	t_env	*env;
+	char	**envp;
+	t_token	*tokens;
+}	t_shell;
+
+/* global variable for signals */
+extern volatile sig_atomic_t	g_signal_received;
+
+/* lexing */
+t_token	*lexer(const char *line);
+int		is_space(char c);
+int		is_operator(char c);
+t_token	*new_token(enum e_token_type type, char *value);
+void	add_token(t_token **head, t_token *new);
+void	free_tokens(t_token *tokens);
+t_token	*get_operator(const char *line, int *i);
+char	*get_word(const char *line, int *i);
+int		check_unclosed_quotes(const char *line);
+
+/* parse */
 
 /* token */
 void	tokenise(t_shell *sh, const char *line);
@@ -57,14 +107,33 @@ void	set_signals_parent_exec(void);
 void	set_signals_child_exec(void);
 
 /* processing */
-void	process_line(t_shell *sh, const char *line);
+int		process_line(t_shell *sh, const char *line);
+
+/* env functions */
+t_env	*env_init(char **envp);
+char	*env_get(t_env *env, const char *key);
+int		env_set(t_env **env, const char *key, const char *value);
+int		env_unset(t_env **env, const char *key);
+char	**env_to_array(t_env *env);
+void	env_free(t_env *env);
+
+/* builtins */
+int		is_builtin(const char *cmd);
+int		exec_builtin(t_shell *sh, char **argv);
+int		builtin_echo(char **argv);
+int		builtin_pwd(void);
+int		builtin_env(t_env *env);
+int		builtin_exit(t_shell *sh, char **argv);
+int		builtin_cd(t_shell *sh, char **argv);
+int		builtin_export(t_shell *sh, char **argv);
+int		builtin_unset(t_shell *sh, char **argv);
 
 /* small utils */
 void	*xcalloc(size_t n, size_t s);
 char	*xstrdup(const char *s);
 
-/* tests */
-void	read_line(void);
-void	print_line(char *line);
+/* testing funcs TO DELETE */
+int		print_tokens(t_shell *sh);
+void	test_builtins(t_shell *sh);
 
 #endif

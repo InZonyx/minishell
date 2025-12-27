@@ -1,34 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   help.c                                             :+:      :+:    :+:   */
+/*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amoureau <amoureau@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/26 19:25:56 by amoureau          #+#    #+#             */
-/*   Updated: 2025/12/27 22:51:50 by amoureau         ###   ########.fr       */
+/*   Created: 2025/12/27 22:09:14 by amoureau          #+#    #+#             */
+/*   Updated: 2025/12/27 22:46:27 by amoureau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	is_only_spaces(const char *line)
+static int	is_n_flag(const char *arg)
 {
 	int	i;
 
-	i = 0;
-	if (!line)
-		return (1);
-	while (line[i])
+	if (!arg || arg[0] != '-')
+		return (0);
+	i = 1;
+	while (arg[i])
 	{
-		if (line[i] != 32 || (line[i] >= 8 && line[i] <= 12))
+		if (arg[i] != 'n')
 			return (0);
 		i++;
 	}
-	return (1);
+	return (i > 1);
 }
 
-void	shell_destroyer(t_shell *sh)
+int	builtin_echo(char **argv)
 {
-	(void) sh;
+	int	i;
+	int	newline;
+
+	i = 1;
+	newline = 1;
+	while (argv[i] && is_n_flag(argv[i]))
+	{
+		newline = 0;
+		i++;
+	}
+	while (argv[i])
+	{
+		ft_putstr_fd(argv[i], 1);
+		if (argv[i + 1])
+			ft_putchar_fd(' ', 1);
+		i++;
+	}
+	if (newline)
+		ft_putchar_fd('\n', 1);
+	return (0);
 }

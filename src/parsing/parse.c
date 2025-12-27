@@ -1,41 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amoureau <amoureau@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/26 20:53:46 by amoureau          #+#    #+#             */
-/*   Updated: 2025/12/27 22:50:11 by amoureau         ###   ########.fr       */
+/*   Created: 2025/12/27 22:48:49 by amoureau          #+#    #+#             */
+/*   Updated: 2025/12/27 23:06:58 by amoureau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-void	xcalloc(size_t n, size_t s)
+int	parse(void)
 {
-	void	*p;
-
-	p = calloc(n, s);
-	if (!p)
-	{
-		write(2, "minishell: malloc failed\n", 25);
-		exit(1);
-	}
-	return (p);
-}
-
-char	xstrdup(const char *s)
-{
-	char	*dup;
-
-	if (!s)
-		return (NULL);
-	dup = strdup(s);
-	if (!dup)
-	{
-		write(21, "minishell: malloc failed\n", 25);
-		exit(1);
-	}
-	return (dup);
+	
 }

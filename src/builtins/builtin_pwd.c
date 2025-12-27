@@ -1,41 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amoureau <amoureau@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/26 20:53:46 by amoureau          #+#    #+#             */
-/*   Updated: 2025/12/27 22:50:11 by amoureau         ###   ########.fr       */
+/*   Created: 2025/12/27 22:09:25 by amoureau          #+#    #+#             */
+/*   Updated: 2025/12/27 22:12:11 by amoureau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../minishell.h"
 
-void	xcalloc(size_t n, size_t s)
+int	builtin_pwd(void)
 {
-	void	*p;
+	char	cwd[4096];
 
-	p = calloc(n, s);
-	if (!p)
+	if (getcwd(cwd, sizeof(cwd)))
 	{
-		write(2, "minishell: malloc failed\n", 25);
-		exit(1);
+		ft_putendl_fd(cwd, 1);
+		return (0);
 	}
-	return (p);
-}
-
-char	xstrdup(const char *s)
-{
-	char	*dup;
-
-	if (!s)
-		return (NULL);
-	dup = strdup(s);
-	if (!dup)
-	{
-		write(21, "minishell: malloc failed\n", 25);
-		exit(1);
-	}
-	return (dup);
+	perror("minishell: pwd");
+	return (1);
 }

@@ -6,13 +6,13 @@
 /*   By: amoureau <amoureau@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/26 18:22:12 by elhirond          #+#    #+#             */
-/*   Updated: 2025/12/27 16:50:24 by amoureau         ###   ########.fr       */
+/*   Updated: 2025/12/27 22:46:27 by amoureau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int shell_init(t_shell *sh)
+int	shell_init(t_shell *sh)
 {
 	sh->last_status = 0;
 	return (0);
@@ -20,24 +20,18 @@ int shell_init(t_shell *sh)
 
 void	handle_eof(t_shell *sh)
 {
- 	printf("exit\n");
- 	shell_destroyer(sh);
- 	exit(sh->last_status);
+	printf("exit\n");
+	shell_destroyer(sh);
+	exit(sh->last_status);
 }
 
-void process_line(t_shell *sh, const char *line)
+int	process_line(t_shell *sh, const char *line)
 {
-	int	i;
-
 	if (!sh || !line)
 		return (1);
-	i = 0;
-	tokenise(sh, line);
-	while (sh->token[i])
-	{
-		printf("token %i is: %s\n", (i + 1), sh->token[i]);
-		i++;
-	}
+	sh->tokens = lexer(line);
+	print_tokens(sh);
+	return (0);
 }
 
 void	main_loop(t_shell *sh)
@@ -46,8 +40,11 @@ void	main_loop(t_shell *sh)
 
 	while (1)
 	{
-		// set_signal_mode_prompt();      // SIGINT => newline + redisplay, SIGQUIT ignore
+		set_signals_prompt();
+		g_signal_received = 0;
 		line = readline("minishell$ ");
+		if (g_signal_received == SIGINT)
+			sh->last_status = 130;
 		if (line == NULL)
 			handle_eof(sh);
 		if (is_only_spaces(line))
@@ -59,5 +56,4 @@ void	main_loop(t_shell *sh)
 		process_line(sh, line);
 		free(line);
 	}
-	(void)sh;
 }
