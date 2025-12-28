@@ -6,7 +6,7 @@
 /*   By: amoureau <amoureau@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 08:49:06 by amoureau          #+#    #+#             */
-/*   Updated: 2025/12/28 18:46:04 by amoureau         ###   ########.fr       */
+/*   Updated: 2025/12/28 19:51:08 by amoureau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ int		exec_builtin_parent(t_shell *sh, t_cmd *cmd);
 char	*resolve_path(t_shell *sh, const char *cmd);
 int		wait_all(pid_t last_pid);
 int		execute(t_shell *sh);
+int		heredoc_read(const char *delimiter);
 
 /* small utils */
 void	*xcalloc(size_t n, size_t s);

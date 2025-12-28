@@ -6,7 +6,7 @@
 /*   By: amoureau <amoureau@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 22:09:14 by amoureau          #+#    #+#             */
-/*   Updated: 2025/12/27 22:46:27 by amoureau         ###   ########.fr       */
+/*   Updated: 2025/12/28 19:34:29 by amoureau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,13 @@ int	builtin_echo(char **argv)
 	}
 	while (argv[i])
 	{
-		ft_putstr_fd(argv[i], 1);
-		if (argv[i + 1])
-			ft_putchar_fd(' ', 1);
+		if (write(1, argv[i], ft_strlen(argv[i])) < 0)
+			return (1);
+		if (argv[i + 1] && write(1, " ", 1) < 0)
+			return (1);
 		i++;
 	}
-	if (newline)
-		ft_putchar_fd('\n', 1);
+	if (newline && write(1, "\n", 1) < 0)
+		return (1);
 	return (0);
 }
