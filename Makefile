@@ -11,10 +11,16 @@ LIBFT_A = ./libft/libft.a
 
 OBJ_DIR = objects
 
-# Readline paths pour macOS (Homebrew)
-READLINE_DIR	= $(shell brew --prefix readline)
-READLINE_INC	= -I$(READLINE_DIR)/include
-READLINE_LIB	= -L$(READLINE_DIR)/lib -lreadline
+UNAME_S := $(shell uname -s)
+
+ifeq ($(UNAME_S),Darwin)
+    READLINE_DIR	= $(shell brew --prefix readline)
+    READLINE_INC	= -I$(READLINE_DIR)/include
+    READLINE_LIB	= -L$(READLINE_DIR)/lib -lreadline
+else
+    READLINE_INC	=
+    READLINE_LIB	= -lreadline
+endif
 
 ########  SRCS  ########
 SRCS			=	main.c \

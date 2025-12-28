@@ -28,12 +28,6 @@ static void	ft_putnbr_base_voidp(uintptr_t nbr, char *base, int *count)
 	uintptr_t	base_len;
 
 	base_len = (uintptr_t)ft_strlen(base);
-	if (nbr < 0)
-	{
-		nbr *= -1;
-		ft_putchar('-');
-		*count += 1;
-	}
 	if (nbr >= base_len)
 	{
 		ft_putnbr_base_voidp(nbr / base_len, base, count);
