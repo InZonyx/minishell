@@ -6,7 +6,7 @@
 /*   By: amoureau <amoureau@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 08:49:06 by amoureau          #+#    #+#             */
-/*   Updated: 2025/12/28 19:51:08 by amoureau         ###   ########.fr       */
+/*   Updated: 2025/12/28 21:26:26 by amoureau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,27 +78,45 @@ typedef struct s_shell
 
 typedef struct s_exec_ctx
 {
-	t_shell *sh;
-	char  **envp_arr;
+	t_shell	*sh;
+	char	**envp_arr;
 }	t_exec_ctx;
+
+typedef struct s_lx
+{
+	t_shell			*sh;
+	const char		*l;
+	int				*i;
+	char			*buf;
+	size_t			len;
+	size_t			cap;
+}	t_lx;
 
 /* global variable for signals */
 extern volatile sig_atomic_t	g_signal_received;
 
 /* lexing */
-t_token	*lexer(const char *line);
+t_token	*lexer(t_shell *sh, const char *line);
 int		is_space(char c);
 int		is_operator(char c);
 t_token	*new_token(enum e_token_type type, char *value);
 void	add_token(t_token **head, t_token *new);
 void	free_tokens(t_token *tokens);
 t_token	*get_operator(const char *line, int *i);
-char	*get_word(const char *line, int *i);
+char	*get_word(t_shell *sh, const char *line, int *i);
 int		check_unclosed_quotes(const char *line);
+int		lx_buf_init(char **buf, size_t *len, size_t *cap);
+int		lx_buf_grow(char **buf, size_t *cap, size_t need);
+int		lx_buf_add_char(char **buf, size_t *len, size_t *cap, char c);
+int		lx_buf_add_str(char **buf, size_t *len, size_t *cap, const char *s);
+int		lx_buf_add_itoa(char **buf, size_t *len, size_t *cap, int n);
+int		lx_is_var_start(char c);
+int		lx_is_var_char(char c);
+int		lx_expand_dollar(t_lx *x);
 
 /* parse */
 t_cmd	*parse(t_token *tokens);
-t_redir *new_redir(enum e_token_type type, char *target);
+t_redir	*new_redir(enum e_token_type type, char *target);
 t_cmd	*new_cmd(t_redir *redir, char *value);
 void	add_cmd(t_cmd **head, t_cmd *new);
 void	free_cmd(t_cmd *cmd);
