@@ -6,7 +6,7 @@
 /*   By: amoureau <amoureau@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/28 21:02:41 by amoureau          #+#    #+#             */
-/*   Updated: 2025/12/28 21:02:42 by amoureau         ###   ########.fr       */
+/*   Updated: 2025/12/28 23:20:03 by amoureau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ static pid_t	run_pipeline(t_exec_ctx *ctx)
 	int		pipefd[2];
 	int		prev_in;
 	pid_t	pid;
+	pid_t	last_pid;
 
 	prev_in = -1;
 	cur = ctx->sh->cmd;
@@ -84,9 +85,10 @@ static pid_t	run_pipeline(t_exec_ctx *ctx)
 		close_prev(&prev_in);
 		if (cur->next)
 			prev_in = pipefd[0];
+		last_pid = pid;
 		cur = cur->next;
 	}
-	return (pid);
+	return (last_pid);
 }
 
 int	execute(t_shell *sh)
@@ -104,6 +106,7 @@ int	execute(t_shell *sh)
 	if (!ctx.envp_arr)
 		return (sh->last_status = 1);
 	set_signals_parent_exec();
+	signal(SIGPIPE, SIG_IGN);
 	pid = run_pipeline(&ctx);
 	free_strarray(ctx.envp_arr);
 	status = wait_all(pid);

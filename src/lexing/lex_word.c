@@ -6,7 +6,7 @@
 /*   By: amoureau <amoureau@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/28 21:02:58 by amoureau          #+#    #+#             */
-/*   Updated: 2025/12/28 21:26:03 by amoureau         ###   ########.fr       */
+/*   Updated: 2025/12/28 23:54:10 by amoureau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,7 @@ char	*get_word(t_shell *sh, const char *l, int *i)
 		else if (lx_read_plain(&x))
 			return (free(x.buf), NULL);
 	}
+	if (x.len == 0)
+		x.buf[0] = '\0';
 	return (x.buf);
 }

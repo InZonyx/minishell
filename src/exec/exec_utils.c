@@ -6,7 +6,7 @@
 /*   By: amoureau <amoureau@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/28 21:02:25 by amoureau          #+#    #+#             */
-/*   Updated: 2025/12/28 21:02:39 by amoureau         ###   ########.fr       */
+/*   Updated: 2025/12/28 23:29:25 by amoureau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*resolve_path(t_shell *sh, const char *cmd)
 		return (NULL);
 	if (ft_strchr(cmd, '/'))
 	{
-		if (access(cmd, X_OK) == 0)
+		if (access(cmd, F_OK) == 0)
 			return (xstrdup(cmd));
 		return (NULL);
 	}
@@ -73,16 +73,18 @@ int	wait_all(pid_t last_pid)
 {
 	int	status;
 	int	last_status;
+	pid_t	pid;
 
 	last_status = 0;
-	while (wait(&status) > 0)
+	while ((pid = wait(&status)) > 0)
 	{
-		if (WIFEXITED(status))
-			last_status = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-			last_status = 128 + WTERMSIG(status);
-		if (last_pid == 0)
-			last_pid = -1;
+		if (pid == last_pid)
+		{
+			if (WIFEXITED(status))
+				last_status = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+				last_status = 128 + WTERMSIG(status);
+		}
 	}
 	return (last_status);
 }
