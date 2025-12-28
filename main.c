@@ -6,7 +6,7 @@
 /*   By: amoureau <amoureau@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 08:47:43 by amoureau          #+#    #+#             */
-/*   Updated: 2025/12/28 00:31:27 by amoureau         ###   ########.fr       */
+/*   Updated: 2025/12/28 15:49:35 by amoureau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,9 @@ int	main(int ac, char **av, char **envp)
 {
 	t_shell	sh;
 
-	if (ac != 1 || shell_init(&sh) != 0)
+	if (ac != 1 || shell_init(&sh, envp) != 0)
 		return (1);
 	(void)av;
-	sh.envp = envp;
 	main_loop(&sh);
 	shell_destroyer(&sh);
 	return (sh.last_status);

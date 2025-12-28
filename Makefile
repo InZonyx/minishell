@@ -11,15 +11,16 @@ LIBFT_A = ./libft/libft.a
 
 OBJ_DIR = objects
 
+########  READLINE CONFIGURATION  ########
 UNAME_S := $(shell uname -s)
 
 ifeq ($(UNAME_S),Darwin)
-    READLINE_DIR	= $(shell brew --prefix readline)
-    READLINE_INC	= -I$(READLINE_DIR)/include
-    READLINE_LIB	= -L$(READLINE_DIR)/lib -lreadline
+	READLINE_DIR	= $(shell brew --prefix readline)
+	READLINE_INC	= -I$(READLINE_DIR)/include
+	READLINE_LIB	= -L$(READLINE_DIR)/lib -lreadline
 else
-    READLINE_INC	=
-    READLINE_LIB	= -lreadline
+	READLINE_INC	=
+	READLINE_LIB	= -lreadline
 endif
 
 ########  SRCS  ########
@@ -29,6 +30,9 @@ SRCS			=	main.c \
 					src/parsing/lexer.c \
 					src/parsing/lexing_utils.c \
 					src/parsing/lexing_utils2.c \
+					src/parsing/parse.c \
+					src/parsing/parse_utils.c \
+					src/parsing/parse_utils2.c \
 					src/signal/signals.c \
 					src/builtins/builtins.c \
 					src/builtins/builtin_echo.c \
@@ -38,8 +42,14 @@ SRCS			=	main.c \
 					src/builtins/builtin_cd.c \
 					src/builtins/builtin_export.c \
 					src/builtins/builtin_unset.c \
+					src/utils/utils.c \
 					src/env/env_init.c \
 					src/env/env_utils.c \
+					src/exec/exec_utils.c \
+					src/exec/exec_pipeline.c \
+					src/exec/exec_child.c \
+					src/exec/exec_builtin_parent.c \
+					src/exec/redirs.c \
 					test_funcs.c \
 
 OBJS			= $(SRCS:%.c=$(OBJ_DIR)/%.o)

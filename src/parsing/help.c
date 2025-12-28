@@ -6,7 +6,7 @@
 /*   By: amoureau <amoureau@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/26 19:25:56 by amoureau          #+#    #+#             */
-/*   Updated: 2025/12/27 22:51:50 by amoureau         ###   ########.fr       */
+/*   Updated: 2025/12/28 17:07:08 by amoureau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,22 @@ int	is_only_spaces(const char *line)
 
 void	shell_destroyer(t_shell *sh)
 {
-	(void) sh;
+	if (!sh)
+		return ;
+	if (sh->tokens)
+	{
+		free_tokens(sh->tokens);
+		sh->tokens = NULL;
+	}
+	if (sh->cmd)
+	{
+		free_cmd(sh->cmd);
+		sh->cmd = NULL;
+	}
+	if (sh->env)
+	{
+		env_free(sh->env);
+		sh->env = NULL;
+	}
+	rl_clear_history();
 }

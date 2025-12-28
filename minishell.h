@@ -6,7 +6,7 @@
 /*   By: amoureau <amoureau@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 08:49:06 by amoureau          #+#    #+#             */
-/*   Updated: 2025/12/27 23:08:46 by amoureau         ###   ########.fr       */
+/*   Updated: 2025/12/28 18:46:04 by amoureau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <string.h>
 # include <errno.h>
 # include <signal.h>
+# include <fcntl.h>
+# include <sys/wait.h>
 
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -71,7 +73,14 @@ typedef struct s_shell
 	t_env	*env;
 	char	**envp;
 	t_token	*tokens;
+	t_cmd	*cmd;
 }	t_shell;
+
+typedef struct s_exec_ctx
+{
+	t_shell *sh;
+	char  **envp_arr;
+}	t_exec_ctx;
 
 /* global variable for signals */
 extern volatile sig_atomic_t	g_signal_received;
@@ -88,26 +97,31 @@ char	*get_word(const char *line, int *i);
 int		check_unclosed_quotes(const char *line);
 
 /* parse */
+t_cmd	*parse(t_token *tokens);
+t_redir *new_redir(enum e_token_type type, char *target);
+t_cmd	*new_cmd(t_redir *redir, char *value);
+void	add_cmd(t_cmd **head, t_cmd *new);
+void	free_cmd(t_cmd *cmd);
+int		check_syntax_errors(t_token *tokens);
+void	add_cmd_redir(t_redir **head, t_redir *new);
 
 /* token */
 void	tokenise(t_shell *sh, const char *line);
 
 /* init / destroy */
-int		shell_init(t_shell *sh);
+int		shell_init(t_shell *sh, char **envp);
 void	shell_destroyer(t_shell *sh);
 
 /* prompt loop utils */
 int		is_only_spaces(const char *line);
 void	handle_eof(t_shell *sh);
 void	main_loop(t_shell *sh);
+int		process_line(t_shell *sh, const char *line);
 
 /* signals */
 void	set_signals_prompt(void);
 void	set_signals_parent_exec(void);
 void	set_signals_child_exec(void);
-
-/* processing */
-int		process_line(t_shell *sh, const char *line);
 
 /* env functions */
 t_env	*env_init(char **envp);
@@ -128,9 +142,18 @@ int		builtin_cd(t_shell *sh, char **argv);
 int		builtin_export(t_shell *sh, char **argv);
 int		builtin_unset(t_shell *sh, char **argv);
 
+/* exec */
+int		apply_redirs(t_redir *redir);
+void	exec_child(t_exec_ctx *ctx, t_cmd *cmd, int fd_in, int fd_out);
+int		exec_builtin_parent(t_shell *sh, t_cmd *cmd);
+char	*resolve_path(t_shell *sh, const char *cmd);
+int		wait_all(pid_t last_pid);
+int		execute(t_shell *sh);
+
 /* small utils */
 void	*xcalloc(size_t n, size_t s);
 char	*xstrdup(const char *s);
+void	free_strarray(char **arr);
 
 /* testing funcs TO DELETE */
 int		print_tokens(t_shell *sh);

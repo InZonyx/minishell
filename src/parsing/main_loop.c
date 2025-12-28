@@ -6,15 +6,23 @@
 /*   By: amoureau <amoureau@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/26 18:22:12 by elhirond          #+#    #+#             */
-/*   Updated: 2025/12/27 22:46:27 by amoureau         ###   ########.fr       */
+/*   Updated: 2025/12/28 19:00:58 by amoureau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	shell_init(t_shell *sh)
+int	shell_init(t_shell *sh, char **envp)
 {
+	if (!sh)
+		return (1);
 	sh->last_status = 0;
+	sh->tokens = NULL;
+	sh->cmd = NULL;
+	sh->envp = envp;
+	sh->env = env_init(envp);
+	if (envp && *envp && !sh->env)
+		return (1);
 	return (0);
 }
 
@@ -29,9 +37,20 @@ int	process_line(t_shell *sh, const char *line)
 {
 	if (!sh || !line)
 		return (1);
+	if (sh->tokens)
+		free_tokens(sh->tokens);
+	if (sh->cmd)
+		free_cmd(sh->cmd);
+	sh->tokens = NULL;
+	sh->cmd = NULL;
 	sh->tokens = lexer(line);
-	print_tokens(sh);
-	return (0);
+	if (!sh->tokens)
+		return (1);
+	// print_tokens(sh); //test - not final
+	sh->cmd = parse(sh->tokens);
+	if (!sh->cmd)
+		return (1);
+	return (execute(sh));
 }
 
 void	main_loop(t_shell *sh)
