@@ -6,7 +6,7 @@
 /*   By: amoureau <amoureau@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/26 18:22:12 by elhirond          #+#    #+#             */
-/*   Updated: 2025/12/28 19:55:38 by amoureau         ###   ########.fr       */
+/*   Updated: 2025/12/28 20:20:09 by amoureau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	process_line(t_shell *sh, const char *line)
 		free_cmd(sh->cmd);
 	sh->tokens = NULL;
 	sh->cmd = NULL;
-	sh->tokens = lexer(line);
+	sh->tokens = lexer(sh, line);
 	if (!sh->tokens)
 		return (1);
 	// print_tokens(sh); //test - not final

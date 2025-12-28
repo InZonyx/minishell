@@ -6,7 +6,7 @@
 /*   By: amoureau <amoureau@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 22:09:11 by amoureau          #+#    #+#             */
-/*   Updated: 2025/12/27 22:56:02 by amoureau         ###   ########.fr       */
+/*   Updated: 2025/12/28 21:06:12 by amoureau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,6 @@ int	builtin_cd(t_shell *sh, char **argv)
 	char	oldpath[4096];
 	int		must_free;
 
-	if (argv[1] && argv[2])
-		return (ft_putendl_fd("minishell: cd: too many arguments", 2), 1);
 	if (!getcwd(oldpath, sizeof(oldpath)))
 		oldpath[0] = '\0';
 	path = get_cd_path(sh, argv, &must_free);

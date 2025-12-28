@@ -6,7 +6,7 @@
 /*   By: amoureau <amoureau@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 22:48:49 by amoureau          #+#    #+#             */
-/*   Updated: 2025/12/28 19:26:34 by amoureau         ###   ########.fr       */
+/*   Updated: 2025/12/28 21:01:29 by amoureau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,35 +42,35 @@
 
 static int	parse_cmd_words(t_token **current, t_cmd *cmd)
 {
-    int		count;
-    char	**argv;
-    t_token	*start;
+	int		count;
+	char	**argv;
+	t_token	*start;
 
-    count = 0;
-    start = *current;
-    while (*current && (*current)->type == TOK_WORD)
-    {
-        count++;
-        *current = (*current)->next;
-    }
-    if (count == 0)
-        return (0);
-    argv = xcalloc(count + 1, sizeof(char *));
-    if (!argv)
-        return (0);
-    *current = start;
-    count = 0;
-    while (*current && (*current)->type == TOK_WORD)
-    {
-        argv[count] = xstrdup((*current)->value);
-        if (!argv[count])
-            return (0);
-        count++;
-        *current = (*current)->next;
-    }
-    argv[count] = NULL;
-    cmd->argv = argv;
-    return (1);
+	count = 0;
+	start = *current;
+	while (*current && (*current)->type == TOK_WORD)
+	{
+		count++;
+		*current = (*current)->next;
+	}
+	if (count == 0)
+		return (0);
+	argv = xcalloc(count + 1, sizeof(char *));
+	if (!argv)
+		return (0);
+	*current = start;
+	count = 0;
+	while (*current && (*current)->type == TOK_WORD)
+	{
+		argv[count] = xstrdup((*current)->value);
+		if (!argv[count])
+			return (0);
+		count++;
+		*current = (*current)->next;
+	}
+	argv[count] = NULL;
+	cmd->argv = argv;
+	return (1);
 }
 
 static int	parse_cmd_redirs(t_token **current, t_cmd *cmd)

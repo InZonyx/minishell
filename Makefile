@@ -27,12 +27,15 @@ endif
 SRCS			=	main.c \
 					src/parsing/main_loop.c \
 					src/parsing/help.c \
-					src/parsing/lexer.c \
-					src/parsing/lexing_utils.c \
-					src/parsing/lexing_utils2.c \
 					src/parsing/parse.c \
 					src/parsing/parse_utils.c \
 					src/parsing/parse_utils2.c \
+					src/lexing/lexer.c \
+					src/lexing/lexing_utils.c \
+					src/lexing/lexing_utils2.c \
+					src/lexing/lex_expand.c \
+					src/lexing/lex_buf.c \
+					src/lexing/lex_word.c \
 					src/signal/signals.c \
 					src/builtins/builtins.c \
 					src/builtins/builtin_echo.c \
@@ -50,7 +53,7 @@ SRCS			=	main.c \
 					src/exec/exec_child.c \
 					src/exec/exec_builtin_parent.c \
 					src/exec/redirs.c \
-					test_funcs.c \
+					src/exec/heredoc.c \
 
 OBJS			= $(SRCS:%.c=$(OBJ_DIR)/%.o)
 

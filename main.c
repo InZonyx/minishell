@@ -6,7 +6,7 @@
 /*   By: amoureau <amoureau@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 08:47:43 by amoureau          #+#    #+#             */
-/*   Updated: 2025/12/28 15:49:35 by amoureau         ###   ########.fr       */
+/*   Updated: 2025/12/28 20:14:03 by amoureau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,3 @@ int	main(int ac, char **av, char **envp)
 	shell_destroyer(&sh);
 	return (sh.last_status);
 }
-
-/*  test
-int main(int ac, char **av, char **envp)
-{
-    t_shell sh;
-    
-    if (ac != 1 && shell_init(&sh) != 0)
-        return (1);
-    (void)av;
-    sh.envp = envp;
-    sh.env = env_init(envp);
-    test_builtins(&sh);
-    shell_destroyer(&sh);
-    return (sh.last_status);
-}*/
