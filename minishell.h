@@ -6,7 +6,7 @@
 /*   By: amoureau <amoureau@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 08:49:06 by amoureau          #+#    #+#             */
-/*   Updated: 2025/12/28 21:26:26 by amoureau         ###   ########.fr       */
+/*   Updated: 2025/12/29 14:23:25 by amoureau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ int		builtin_unset(t_shell *sh, char **argv);
 int		apply_redirs(t_redir *redir);
 void	exec_child(t_exec_ctx *ctx, t_cmd *cmd, int fd_in, int fd_out);
 int		exec_builtin_parent(t_shell *sh, t_cmd *cmd);
+char	*find_in_paths(char **paths, const char *cmd);
 int		wait_all(pid_t last_pid);
 int		execute(t_shell *sh);
 int		heredoc_read(const char *delimiter);

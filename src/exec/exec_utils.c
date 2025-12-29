@@ -6,7 +6,7 @@
 /*   By: amoureau <amoureau@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/28 21:02:25 by amoureau          #+#    #+#             */
-/*   Updated: 2025/12/28 23:29:25 by amoureau         ###   ########.fr       */
+/*   Updated: 2025/12/29 14:22:52 by amoureau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char	*build_cmd_path(const char *dir, const char *cmd)
 	return (full);
 }
 
-static char	*find_in_paths(char **paths, const char *cmd)
+char	*find_in_paths(char **paths, const char *cmd)
 {
 	char	*full;
 	int		i;

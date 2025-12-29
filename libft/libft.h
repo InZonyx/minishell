@@ -6,13 +6,14 @@
 /*   By: amoureau <amoureau@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:51:53 by amoureau          #+#    #+#             */
-/*   Updated: 2025/11/05 22:15:53 by amoureau         ###   ########.fr       */
+/*   Updated: 2025/12/29 14:43:21 by amoureau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include "get_next_line_bonus.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <stddef.h>

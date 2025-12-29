@@ -6,7 +6,7 @@
 /*   By: amoureau <amoureau@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/26 18:22:12 by elhirond          #+#    #+#             */
-/*   Updated: 2025/12/28 23:37:11 by amoureau         ###   ########.fr       */
+/*   Updated: 2025/12/29 16:10:20 by amoureau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	shell_init(t_shell *sh, char **envp)
 
 static void	handle_eof(t_shell *sh)
 {
-	printf("exit\n");
+	// printf("exit\n");
 	shell_destroyer(sh);
 	exit(sh->last_status);
 }
@@ -71,26 +71,72 @@ static int	process_line(t_shell *sh, const char *line)
 	return (execute(sh));
 }
 
-void	main_loop(t_shell *sh)
-{
-	char	*line;
+// void	main_loop(t_shell *sh)
+// {
+// 	char	*line;
 
-	while (1)
-	{
-		set_signals_prompt();
-		g_signal_received = 0;
-		line = readline("minishell$ ");
-		if (g_signal_received == SIGINT)
-			sh->last_status = 130;
-		if (line == NULL)
-			handle_eof(sh);
-		if (is_only_spaces(line))
-		{
-			free(line);
-			continue ;
-		}
-		add_history(line);
-		process_line(sh, line);
-		free(line);
-	}
+// 	while (1)
+// 	{
+// 		set_signals_prompt();
+// 		g_signal_received = 0;
+// 		line = readline("minishell$ ");
+// 		if (g_signal_received == SIGINT)
+// 			sh->last_status = 130;
+// 		if (line == NULL)
+// 			handle_eof(sh);
+// 		if (is_only_spaces(line))
+// 		{
+// 			free(line);
+// 			continue ;
+// 		}
+// 		add_history(line);
+// 		process_line(sh, line);
+// 		free(line);
+// 	}
+// }
+
+/*   testing function to remove afterwards    */
+void main_loop(t_shell *sh)
+{
+    char *line;
+
+    while (1)
+    {
+        g_signal_received = 0;
+
+        if (isatty(STDIN_FILENO))
+        {
+            set_signals_prompt();
+            line = readline("minishell$ ");
+        }
+        else
+        {
+            line = get_next_line(STDIN_FILENO);
+        }
+
+        if (!line)
+            handle_eof(sh);
+
+        if (!isatty(STDIN_FILENO))
+        {
+            char *tmp = ft_strtrim(line, "\n");
+            free(line);
+            line = tmp;
+        }
+
+        if (g_signal_received == SIGINT)
+            sh->last_status = 130;
+
+        if (is_only_spaces(line))
+        {
+            free(line);
+            continue;
+        }
+
+        if (isatty(STDIN_FILENO))
+            add_history(line);
+
+        process_line(sh, line);
+        free(line);
+    }
 }

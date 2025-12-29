@@ -59,6 +59,7 @@ SRCS			=	ft_isalpha.c \
 					ft_putchar.c \
 					ft_putnbr_base.c \
 					ft_atol.c \
+					get_next_line_bonus.c \
 
 ##BSRCS			=	src/ft_lstnew_bonus.c \
 					src/ft_lstadd_front_bonus.c \
