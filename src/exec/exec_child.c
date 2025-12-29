@@ -56,7 +56,9 @@ void	exec_child(t_exec_ctx *ctx, t_cmd *cmd, int fd_in, int fd_out)
 		exit(1);
 	while (cmd->argv && cmd->argv[0] && cmd->argv[0][0] == '\0')
 		cmd->argv++;
-	if (cmd->argv && cmd->argv[0] && is_builtin(cmd->argv[0]))
+	if (!cmd->argv || !cmd->argv[0])
+		exit(0);
+	if (is_builtin(cmd->argv[0]))
 		exit(exec_builtin(ctx->sh, cmd->argv));
 	exec_external(ctx, cmd);
 }

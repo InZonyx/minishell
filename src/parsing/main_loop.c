@@ -33,6 +33,21 @@ void	handle_eof(t_shell *sh)
 	exit(sh->last_status);
 }
 
+static int	all_empty_words(t_token *t)
+{
+	if (!t)
+		return (0);
+	while (t)
+	{
+		if (t->type != TOK_WORD)
+			return (0);
+		if (t->value && t->value[0] != '\0')
+			return (0);
+		t = t->next;
+	}
+	return (1);
+}
+
 int	process_line(t_shell *sh, const char *line)
 {
 	if (!sh || !line)
@@ -45,11 +60,15 @@ int	process_line(t_shell *sh, const char *line)
 	sh->cmd = NULL;
 	sh->tokens = lexer(sh, line);
 	if (!sh->tokens)
-		return (1);
+		return (sh->last_status = 2, 1);
 	// print_tokens(sh); //test - not final
 	sh->cmd = parse(sh->tokens);
 	if (!sh->cmd)
-		return (1);
+	{
+		if (all_empty_words(sh->tokens))
+			return (sh->last_status = 0, 0);
+		return (sh->last_status = 2, 1);
+	}
 	return (execute(sh));
 }
 

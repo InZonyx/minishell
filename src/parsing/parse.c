@@ -268,30 +268,30 @@ static int	handle_redir(t_cmd *cmd, t_token **current)
 
 static t_cmd	*parse_single_cmd(t_token **current)
 {
-    t_cmd *cmd;
-    if (!(cmd = xcalloc(1, sizeof(t_cmd))))
-        return (NULL);
-    if (!(cmd->argv = xcalloc(1, sizeof(char *))))
-        return (free(cmd), NULL);
-    while (*current && (*current)->type != TOK_PIPE)
-    {
-        if ((*current)->type == TOK_WORD)
-        {
-            if (!add_word_to_argv(cmd, (*current)->value))
-                return (free_cmd(cmd), NULL);
-            *current = (*current)->next;
-        }
-        else if ((*current)->type >= TOK_REDIR_IN && (*current)->type <= TOK_HEREDOC)
-        {
-            if (!handle_redir(cmd, current))
-                return (free_cmd(cmd), NULL);
-        }
-        else
-            *current = (*current)->next;
-    }
-    if (!cmd->argv[0])
-        return (free_cmd(cmd), NULL);
-    return (cmd);
+	t_cmd *cmd;
+	if (!(cmd = xcalloc(1, sizeof(t_cmd))))
+		return (NULL);
+	if (!(cmd->argv = xcalloc(1, sizeof(char *))))
+		return (free(cmd), NULL);
+	while (*current && (*current)->type != TOK_PIPE)
+	{
+		if ((*current)->type == TOK_WORD)
+		{
+			if (!add_word_to_argv(cmd, (*current)->value))
+				return (free_cmd(cmd), NULL);
+			*current = (*current)->next;
+		}
+		else if ((*current)->type >= TOK_REDIR_IN && (*current)->type <= TOK_HEREDOC)
+		{
+			if (!handle_redir(cmd, current))
+				return (free_cmd(cmd), NULL);
+		}
+		else
+			*current = (*current)->next;
+	}
+	if (!cmd->argv[0] && !cmd->redirs)
+		return (free_cmd(cmd), NULL);
+	return (cmd);
 }
 
 t_cmd	*parse(t_token *tokens)

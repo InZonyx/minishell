@@ -97,9 +97,10 @@ int	execute(t_shell *sh)
 	pid_t		pid;
 	int			status;
 
-	if (!sh || !sh->cmd || !sh->cmd->argv || !sh->cmd->argv[0])
+	if (!sh || !sh->cmd)
 		return (0);
-	if (!sh->cmd->next && is_builtin(sh->cmd->argv[0]))
+	if (!sh->cmd->next && sh->cmd->argv && sh->cmd->argv[0]
+		&& is_builtin(sh->cmd->argv[0]))
 		return (exec_builtin_parent(sh, sh->cmd));
 	ctx.sh = sh;
 	ctx.envp_arr = env_to_array(sh->env);
