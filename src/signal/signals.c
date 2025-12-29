@@ -14,8 +14,6 @@
 
 volatile sig_atomic_t	g_signal_received = 0;
 
-void	rl_replace_line(const char *text, int clear_undo);
-
 static void	sigint_prompt(int sig)
 {
 	(void)sig;
