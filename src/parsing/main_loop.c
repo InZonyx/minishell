@@ -26,7 +26,7 @@ int	shell_init(t_shell *sh, char **envp)
 	return (0);
 }
 
-void	handle_eof(t_shell *sh)
+static void	handle_eof(t_shell *sh)
 {
 	printf("exit\n");
 	shell_destroyer(sh);
@@ -48,7 +48,7 @@ static int	all_empty_words(t_token *t)
 	return (1);
 }
 
-int	process_line(t_shell *sh, const char *line)
+static int	process_line(t_shell *sh, const char *line)
 {
 	if (!sh || !line)
 		return (1);

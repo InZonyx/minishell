@@ -22,19 +22,6 @@ int	is_operator(char c)
 	return (c == '|' || c == '<' || c == '>');
 }
 
-t_token	*new_token(enum e_token_type type, char *value)
-{
-	t_token	*token;
-
-	token = malloc(sizeof(t_token));
-	if (!token)
-		return (NULL);
-	token->type = type;
-	token->value = value;
-	token->next = NULL;
-	return (token);
-}
-
 void	add_token(t_token **head, t_token *new)
 {
 	t_token	*tmp;

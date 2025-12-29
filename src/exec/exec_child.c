@@ -12,6 +12,31 @@
 
 #include "../../minishell.h"
 
+static char	*resolve_path(t_shell *sh, const char *cmd)
+{
+	char	**paths;
+	char	*full;
+	char	*path_var;
+
+	if (!cmd || !*cmd)
+		return (NULL);
+	if (ft_strchr(cmd, '/'))
+	{
+		if (access(cmd, F_OK) == 0)
+			return (xstrdup(cmd));
+		return (NULL);
+	}
+	path_var = env_get(sh->env, "PATH");
+	if (!path_var)
+		return (NULL);
+	paths = ft_split(path_var, ':');
+	if (!paths)
+		return (NULL);
+	full = find_in_paths(paths, cmd);
+	free_strarray(paths);
+	return (full);
+}
+
 static void	dup_io(int fd_in, int fd_out)
 {
 	if (fd_in != -1)

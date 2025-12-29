@@ -99,19 +99,14 @@ extern volatile sig_atomic_t	g_signal_received;
 t_token	*lexer(t_shell *sh, const char *line);
 int		is_space(char c);
 int		is_operator(char c);
-t_token	*new_token(enum e_token_type type, char *value);
 void	add_token(t_token **head, t_token *new);
 void	free_tokens(t_token *tokens);
-t_token	*get_operator(const char *line, int *i);
 char	*get_word(t_shell *sh, const char *line, int *i);
-int		check_unclosed_quotes(const char *line);
 int		lx_buf_init(char **buf, size_t *len, size_t *cap);
 int		lx_buf_grow(char **buf, size_t *cap, size_t need);
 int		lx_buf_add_char(char **buf, size_t *len, size_t *cap, char c);
 int		lx_buf_add_str(char **buf, size_t *len, size_t *cap, const char *s);
 int		lx_buf_add_itoa(char **buf, size_t *len, size_t *cap, int n);
-int		lx_is_var_start(char c);
-int		lx_is_var_char(char c);
 int		lx_expand_dollar(t_lx *x);
 
 /* parse */
@@ -129,9 +124,7 @@ void	shell_destroyer(t_shell *sh);
 
 /* prompt loop utils */
 int		is_only_spaces(const char *line);
-void	handle_eof(t_shell *sh);
 void	main_loop(t_shell *sh);
-int		process_line(t_shell *sh, const char *line);
 
 /* signals */
 void	set_signals_prompt(void);
@@ -161,7 +154,6 @@ int		builtin_unset(t_shell *sh, char **argv);
 int		apply_redirs(t_redir *redir);
 void	exec_child(t_exec_ctx *ctx, t_cmd *cmd, int fd_in, int fd_out);
 int		exec_builtin_parent(t_shell *sh, t_cmd *cmd);
-char	*resolve_path(t_shell *sh, const char *cmd);
 int		wait_all(pid_t last_pid);
 int		execute(t_shell *sh);
 int		heredoc_read(const char *delimiter);

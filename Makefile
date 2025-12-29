@@ -29,7 +29,6 @@ SRCS			=	main.c \
 					src/parsing/help.c \
 					src/parsing/parse.c \
 					src/parsing/parse_utils.c \
-					src/parsing/parse_utils2.c \
 					src/lexing/lexer.c \
 					src/lexing/lexing_utils.c \
 					src/lexing/lexing_utils2.c \

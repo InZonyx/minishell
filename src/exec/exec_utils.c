@@ -44,31 +44,6 @@ static char	*find_in_paths(char **paths, const char *cmd)
 	return (NULL);
 }
 
-char	*resolve_path(t_shell *sh, const char *cmd)
-{
-	char	**paths;
-	char	*full;
-	char	*path_var;
-
-	if (!cmd || !*cmd)
-		return (NULL);
-	if (ft_strchr(cmd, '/'))
-	{
-		if (access(cmd, F_OK) == 0)
-			return (xstrdup(cmd));
-		return (NULL);
-	}
-	path_var = env_get(sh->env, "PATH");
-	if (!path_var)
-		return (NULL);
-	paths = ft_split(path_var, ':');
-	if (!paths)
-		return (NULL);
-	full = find_in_paths(paths, cmd);
-	free_strarray(paths);
-	return (full);
-}
-
 int	wait_all(pid_t last_pid)
 {
 	int		status;

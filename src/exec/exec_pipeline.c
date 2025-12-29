@@ -12,8 +12,6 @@
 
 #include "../../minishell.h"
 
-void	exec_child(t_exec_ctx *ctx, t_cmd *cmd, int fd_in, int fd_out);
-
 static void	close_prev(int *prev_in)
 {
 	if (*prev_in != -1)

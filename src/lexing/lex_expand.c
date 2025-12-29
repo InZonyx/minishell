@@ -12,12 +12,12 @@
 
 #include "../../minishell.h"
 
-int	lx_is_var_start(char c)
+static int	lx_is_var_start(char c)
 {
 	return (ft_isalpha((unsigned char)c) || c == '_');
 }
 
-int	lx_is_var_char(char c)
+static int	lx_is_var_char(char c)
 {
 	return (ft_isalnum((unsigned char)c) || c == '_');
 }
