@@ -123,9 +123,6 @@ void	free_cmd(t_cmd *cmd);
 int		check_syntax_errors(t_token *tokens);
 void	add_cmd_redir(t_redir **head, t_redir *new);
 
-/* token */
-void	tokenise(t_shell *sh, const char *line);
-
 /* init / destroy */
 int		shell_init(t_shell *sh, char **envp);
 void	shell_destroyer(t_shell *sh);
@@ -173,9 +170,5 @@ int		heredoc_read(const char *delimiter);
 void	*xcalloc(size_t n, size_t s);
 char	*xstrdup(const char *s);
 void	free_strarray(char **arr);
-
-/* testing funcs TO DELETE */
-int		print_tokens(t_shell *sh);
-void	test_builtins(t_shell *sh);
 
 #endif

@@ -96,7 +96,6 @@ int	builtin_cd(t_shell *sh, char **argv)
 		ft_putendl_fd("minishell: cd: too many arguments", 2);
 		return (1);
 	}
-
 	if (!getcwd(oldpath, sizeof(oldpath)))
 		oldpath[0] = '\0';
 	path = get_cd_path(sh, argv, &must_free);

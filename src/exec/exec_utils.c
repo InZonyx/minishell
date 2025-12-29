@@ -71,12 +71,13 @@ char	*resolve_path(t_shell *sh, const char *cmd)
 
 int	wait_all(pid_t last_pid)
 {
-	int	status;
-	int	last_status;
+	int		status;
+	int		last_status;
 	pid_t	pid;
 
 	last_status = 0;
-	while ((pid = wait(&status)) > 0)
+	pid = wait(&status);
+	while (pid > 0)
 	{
 		if (pid == last_pid)
 		{
@@ -85,6 +86,7 @@ int	wait_all(pid_t last_pid)
 			else if (WIFSIGNALED(status))
 				last_status = 128 + WTERMSIG(status);
 		}
+		pid = wait(&status);
 	}
 	return (last_status);
 }

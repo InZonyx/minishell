@@ -61,7 +61,6 @@ int	process_line(t_shell *sh, const char *line)
 	sh->tokens = lexer(sh, line);
 	if (!sh->tokens)
 		return (sh->last_status = 2, 1);
-	// print_tokens(sh); //test - not final
 	sh->cmd = parse(sh->tokens);
 	if (!sh->cmd)
 	{
